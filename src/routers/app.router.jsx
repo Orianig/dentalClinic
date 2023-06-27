@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Route, Routes, Navigate  } from "react-router-dom"
 import Login from "../pages/Login/Login.page"
 import Register from "../pages/Register/Register.page"
 import Profile from "../pages/Profile/Profile.page"
@@ -18,3 +18,25 @@ export const AppRouter = () => {
     </BrowserRouter>
   )
 }
+
+// import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+// import { useSelector } from "react-redux";
+// import Login from "../pages/Login/Login.page";
+// import Register from "../pages/Register/Register.page";
+// import Profile from "../pages/Profile/Profile.page";
+// import NotFound from "../pages/404/notFound.page";
+
+// export const AppRouter = () => {
+//   const token = useSelector((state) => state.auth.token);
+
+//   return (
+//     <BrowserRouter>
+//       <Routes>
+//         <Route path="/" element={token ? <Profile /> : <Navigate to="/login" />} />
+//         <Route path="/login" element={!token ? <Login /> : <Navigate to="/" />} />
+//         <Route path="/register" element={<Register />} />
+//         <Route path="*" element={<NotFound />} />
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// };
