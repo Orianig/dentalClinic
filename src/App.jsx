@@ -1,12 +1,17 @@
-import { useState } from 'react'
+// import { useState } from 'react'
 import { AppRouter } from "./routers/app.router";
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  
   return (
     <>
+      <div>Este es el header</div>
+      <nav>
+        <a href="#">Register</a>
+        {/* If para saber si es admin */}
+        <a href="#">Citas</a>
+      </nav>
        <div className="page-container">
         <AppRouter></AppRouter>
       </div>
