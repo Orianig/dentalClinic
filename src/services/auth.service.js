@@ -16,15 +16,8 @@ const url = 'http://localhost:3000/'
 
 //REGISTRO
 export const register = async (credentials) => {
-    await axios.post(`${url}auth/register`,credentials)
-    const newRegister = {
-        "name": credentials.name,
-        "lastName": credentials.lastName,
-        "email": credentials.email,
-        "password": credentials.password,
-        "phoneNumber": credentials.phoneNumber,
-    }
-    return await login(newRegister)
+    const {data} = await axios.post(`${url}auth/register`,credentials)
+    return data
 }
 
 //LOGIN
