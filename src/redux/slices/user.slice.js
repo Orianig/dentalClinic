@@ -9,6 +9,7 @@ export const userSlice = createSlice({
     data: {
       email: "",
       role: "",
+      name: "",
     },
   },
   reducers: {
@@ -20,6 +21,7 @@ export const userSlice = createSlice({
         (state.data = {
           email: payload.email,
           role: payload.role,
+          name: payload.name,
         });
     },
     logout: (state) => {
@@ -31,6 +33,7 @@ export const userSlice = createSlice({
         data: {
           email: "",
           role: "",
+          name: "",
         },
       };
     },

@@ -23,14 +23,9 @@ export const register = async (credentials) => {
 //LOGIN
 //funcion que toma las credenciales del usuario
 export const login = async (credentials) => {
-    try {
       const res = await axios.post(`${url}auth/login`, credentials);
-      console.log('Respuesta de inicio de sesión:', res.data);
+      // console.log('Respuesta de inicio de sesión:', res.data);
       return res.data.token;
-    } catch (error) {
-      console.error('Error en la solicitud de inicio de sesión:', error);
-      throw error;
-    }
   };
 
 
