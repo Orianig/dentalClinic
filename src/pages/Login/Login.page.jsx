@@ -4,8 +4,10 @@ import { login } from "../../services/auth.service";
 import { login as loginStore } from "../../redux/slices/user.slice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
+import Logo from "../../assets/images/logo/logo-7.png";
+import "./Login.css";
 
 //Hooks
 //se usa el hook para establecer el estado del usuario
@@ -45,14 +47,14 @@ campos del formulario*/
     // console.log("Realizando solicitud de inicio de sesión...");
     login(user)
       .then((result) => {
-        console.log(user)
+        console.log(user);
         // console.log("Respuesta de inicio de sesión recibida:", result);
         setToken(result);
       })
       .catch((error) => {
         // console.error("Error en el inicio de sesión:", error);
         setUserError({ credentials: "Error en el inicio de sesión" });
-        toast.error('No ha sido posible iniciar sesion');
+        toast.error("No ha sido posible iniciar sesion");
       });
   };
   //se crea un objeto "data" que contiene las credenciales del usuario
@@ -68,7 +70,7 @@ campos del formulario*/
           name: decoded.name,
         })
       );
-      toast.success('Bienvenido ' + decoded.name);
+      toast.success("Bienvenido " + decoded.name);
       setTimeout(() => {
         navigate("/");
       }, 1000);
@@ -77,96 +79,74 @@ campos del formulario*/
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
-          />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign in to your account
-          </h2>
+      <div className="register flex flex-col min-h-screen rounded-lg md:p-8">
+        <div className=" mb-6">
+          <img className="h-44 w-auto" src={Logo} alt="Company" />
         </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  value={user.email}
-                  onChange={handleChange}
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
+        <div className="p-8">
+          <h1 className="text-6xl text-white font-medium mb-4">
+            Inicia sesión
+          </h1>
+          <span className="text-gray-500 font-medium">
+            ¿No eres usuario?{" "}
+            <a
+              href="#"
+              className="text-primary hover:underline"
+              onClick={() => navigate("/register")}
+            >
+              Registrate
+            </a>
+          </span>
+          <form className="mt-8">
+            <div className="max-w-lg mb-4">
+              <input
+                value={user.email}
+                onChange={handleChange}
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="w-full py-3 px-4 rounded-xl outline-none bg-[#343434] text-gray-100 group focus:ring-2 focus:ring-primary"
+                placeholder="Correo electrónico"
+              />
             </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Password
-                </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
-              </div>
-              <div className="mt-2">
-                <input
-                  value={user.password}
-                  onChange={handleChange}
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
+            <div className="max-w-lg mb-4">
+              <input
+                value={user.password}
+                onChange={handleChange}
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                className="w-full py-3 px-4 rounded-xl outline-none bg-[#343434] text-gray-100 group focus:ring-2 focus:ring-primary"
+                placeholder="Contraseña"
+              />
+            </div>
+            <div className="max-w-lg flex justify-center md:justify-end mb-6">
+              <a
+                href="#"
+                className="text-gray-500 font-medium hover:text-gray-300 transition-colors"
+              >
+                ¿Olvidaste tu contraseña?
+              </a>
             </div>
             {userError?.credentials ? (
               <div>{userError.credentials}</div>
             ) : (
               <div></div>
             )}
-            <div>
+            <div className="max-w-lg flex justify-center md:justify-end mb-6">
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="bg-primary text-white w-48 py-3 px-4 rounded-full hover:bg-cyan-700 transition-colors"
                 onClick={(e) => handleSubmit(e)}
               >
-                Sign in
+                Iniciar sesión
               </button>
             </div>
           </form>
-
-          <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?{" "}
-            <a
-              href="#"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-            >
-              Start a 14 day free trial
-            </a>
-          </p>
         </div>
       </div>
     </>
