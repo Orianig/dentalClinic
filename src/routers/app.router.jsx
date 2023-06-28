@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes, Navigate  } from "react-router-dom"
 import Login from "../pages/Login/Login.page"
 import Register from "../pages/Register/Register.page"
-import Dashboard from "../pages/Dashboard/Dashboard.page"
+import Profile from "../pages/Dashboard/Profile.page"
 import NotFound from "../pages/404/notFound.page"
 
 export const AppRouter = () => {
@@ -12,7 +12,7 @@ export const AppRouter = () => {
         <Routes>
             <Route path="*" element={<NotFound />} />
             <Route path="/login" element={ <Login /> } />
-            <Route path="/" element={ <Dashboard /> } />
+            <Route path="/" element={ <Profile /> } />
             <Route path="/register" element={ <Register /> } />
         </Routes>
     </BrowserRouter>
