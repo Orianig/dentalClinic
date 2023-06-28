@@ -11,7 +11,6 @@ import Patients from "../pages/Dashboard/Patients";
 import Doctors from "../pages/Dashboard/Doctors";
 import AppointmentManagement from "../pages/Dashboard/AppointmentManagement";
 import Treatments from "../pages/Dashboard/Treatments";
-import Interventions from "../pages/Dashboard/Interventions";
 import NotFound from "../pages/404/notFound.page";
 
 export const AppRouter = () => {
@@ -32,7 +31,6 @@ export const AppRouter = () => {
             element={<AppointmentManagement />}
           />
           <Route path="treatments" element={<Treatments />} />
-          <Route path="interventions" element={<Interventions />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
