@@ -30,18 +30,18 @@ const Register = () => {
   // se ejecuta cuando se envia el formulario
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Realizando solicitud de registro...");
+    // console.log("Realizando solicitud de registro...");
     register(user)
       .then((result) => {
-        console.log("Registro exitoso:", result);
-        toast.success('Registrado con exito' + user.name);
+        // console.log("Registro exitoso:", result);
+        toast.success(user.name + ' te haz registrado con exito');
         setTimeout(() => {
           navigate("/login");
         }, 2000);
       })
       .catch((error) => {
-        console.error("Error en el registro:", error);
-        toast.error('No ha sido posible registrarse' + error);
+        // console.error("Error en el registro:", error);
+        toast.error('No se han cumplido los parametros necesarios');
       });
   };
 

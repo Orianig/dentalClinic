@@ -4,6 +4,7 @@ import { login } from "../../services/auth.service";
 import { login as loginStore } from "../../redux/slices/user.slice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { toast } from 'react-toastify';
 import jwtDecode from "jwt-decode";
 
 //Hooks
@@ -41,16 +42,17 @@ campos del formulario*/
   // se ejecuta cuando se envia el formulario
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Realizando solicitud de inicio de sesión...");
+    // console.log("Realizando solicitud de inicio de sesión...");
     login(user)
       .then((result) => {
-        console.log("Respuesta de inicio de sesión recibida:", result);
-        console.log("Inicio de sesión exitoso:", result);
+        console.log(user)
+        // console.log("Respuesta de inicio de sesión recibida:", result);
         setToken(result);
       })
       .catch((error) => {
-        console.error("Error en el inicio de sesión:", error);
+        // console.error("Error en el inicio de sesión:", error);
         setUserError({ credentials: "Error en el inicio de sesión" });
+        toast.error('No ha sido posible iniciar sesion');
       });
   };
   //se crea un objeto "data" que contiene las credenciales del usuario
@@ -63,9 +65,13 @@ campos del formulario*/
           token: token,
           email: decoded.email,
           role: decoded.roleId,
+          name: decoded.name,
         })
       );
-      navigate("/");
+      toast.success('Bienvenido ' + decoded.name);
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     }
   }, [token, dispatch, navigate]);
 
