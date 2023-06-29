@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Logo from "../assets/images/logo/logo-7.png";
+import Logo1 from "../assets/images/logo/logo-general.png";
 //ICONS
 import { FaUser, FaUserMd, FaUsers } from "react-icons/fa"; //profile - doctor - pacientes - citas
 import { BsCalendarPlusFill } from "react-icons/bs"; //citas
@@ -25,9 +27,9 @@ const Sidebar = () => {
         } transition-all`}
       >
         <div>
-          <h1 className="text-center text-2xl font-bold text-gray-600 mb-10">
-            ADMIN
-          </h1>
+          <div className="mb-8">
+            <img className="h-20 w-auto" src={Logo} alt="Company" />
+          </div>
           <nav>
             <Link
               to="/"
