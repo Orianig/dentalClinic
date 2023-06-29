@@ -5,3 +5,9 @@
 ::-webkit-scrollbar {
     width: 0px;
   }
+
+  /* @layer components {
+    .input-ppal {
+      @apply w-full py-3 px-4 rounded-xl outline-none bg-[#343434] text-gray-100 group focus:ring-2 focus:ring-primary;
+    }
+  } */
