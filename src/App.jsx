@@ -14,7 +14,7 @@ function App() {
         {/* <a href="#">Citas</a> */}
 
        <div className="page-container">
-       <ToastContainer />
+       <ToastContainer autoClose={3000} />
         <AppRouter/>
       </div>
     </>
