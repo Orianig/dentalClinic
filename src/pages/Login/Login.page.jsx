@@ -68,6 +68,7 @@ campos del formulario*/
           email: decoded.email,
           role: decoded.roleId,
           name: decoded.name,
+          lastName: decoded.lastName,
         })
       );
       toast.success("Bienvenido " + decoded.name);

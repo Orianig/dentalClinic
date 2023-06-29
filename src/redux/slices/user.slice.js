@@ -10,6 +10,7 @@ export const userSlice = createSlice({
       email: "",
       role: "",
       name: "",
+      lastName: "",
     },
   },
   reducers: {
@@ -22,6 +23,7 @@ export const userSlice = createSlice({
           email: payload.email,
           role: payload.role,
           name: payload.name,
+          lastName: payload.lastName,
         });
     },
     logout: (state) => {
@@ -34,6 +36,7 @@ export const userSlice = createSlice({
           email: "",
           role: "",
           name: "",
+          lastName: "",
         },
       };
     },
