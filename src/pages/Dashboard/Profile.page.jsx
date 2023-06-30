@@ -1,36 +1,62 @@
 //se importan los modulos
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserProfile } from "../../services/user.service";
+import { getUserProfile, updateProfile } from "../../services/user.service";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const [userProfile, setUserProfile] = useState("");
+  const [user, setUser] = useState({});
   // se accede al dispatch y al token de autentificacion desde el estado global
   const dispatch = useDispatch(); //dispatch permite actualizar el estado global de la aplicacion
   const authToken = useSelector((state) => state.user.credentials.token);
 
   useEffect(() => {
-  //obtiene el perfil de usuario
-  const fetchUserProfile = async () => {
+    //obtiene el perfil de usuario
+    const fetchUserProfile = async () => {
+      try {
+        if (authToken) {
+          //verifico el token
+          console.log(authToken);
+          //paso el token como argumento y recibo los datos desde mi bbdd
+          const userProfile = await getUserProfile(authToken);
+          //obtengo los datos
+          console.log(userProfile);
+          //actualiza el estado local
+          setUserProfile(userProfile.data);
+        }
+      } catch (error) {
+        console.error("Error retrieving user profile:", error);
+      }
+    };
+    //  callback que se ejecuta después de que el componente se haya montado
+    fetchUserProfile(); //fetch ==> obtener datos
+  }, []); //solo se ejecuta una vez
+
+  // maneja los cambios en los campos de entrada de un formulario
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUserProfile((prevProfile) => ({
+      ...prevProfile,
+      [name]: value,
+    }));
+  };
+  //maneja el evento del boton guardar
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Evita el comportamiento predeterminado del formulario
+
     try {
       if (authToken) {
-        //verifico el token
-        console.log(authToken);
-        //paso el token como argumento y recibo los datos desde mi bbdd
-        const userProfile = await getUserProfile(authToken);
-        //obtengo los datos
-        console.log(userProfile);
-        //actualiza el estado local
-        setUserProfile(userProfile.data);
+        // Realiza la actualización del perfil del usuario en la base de datos
+        await updateProfile(authToken, userProfile);
+        console.log("Perfil de usuario actualizado exitosamente.");
+        toast.success("Sus datos han sido actualizados correctamente")
       }
     } catch (error) {
-      console.error("Error retrieving user profile:", error);
+      console.error("Error al actualizar el perfil de usuario:", error);
+      toast.error("No ha sido posible modificar sus datos");
     }
   };
-        //  callback que se ejecuta después de que el componente se haya montado
-        fetchUserProfile(); //fetch ==> obtener datos
-      }, []); //solo se ejecuta una vez
-
   return (
     <>
       <div className="bg-secondary-100 p-8 rounded-xl mb-8">
@@ -52,8 +78,9 @@ const Profile = () => {
                   type="text"
                   className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
                   placeholder="Nombre"
+                  name="name"
                   value={userProfile.name}
-                  // onChange={handleChange}
+                  onChange={handleChange}
                 />
               </div>
               {/* LASTNAME */}
@@ -62,14 +89,15 @@ const Profile = () => {
                   type="text"
                   className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
                   placeholder="Apellido(s)"
+                  name="lastName"
                   value={userProfile.lastName}
-                  // onChange={handleChange}
+                  onChange={handleChange}
                 />
               </div>
             </div>
           </div>
-          {/* PHONE NUMBER */}
-          <div className="flex flex-col md:flex-row md:items-center gap-y-2 mb-8">
+            {/* PHONE NUMBER */}
+            <div className="flex flex-col md:flex-row md:items-center gap-y-2 mb-8">
             <div className="w-full md:w-1/4">
               <p>
                 Número de contacto <span className="text-red-500">*</span>
@@ -80,8 +108,45 @@ const Profile = () => {
                 type="text"
                 className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
                 placeholder="Número de contacto"
+                name="phoneNumber"
                 value={userProfile.phoneNumber}
-                // onChange={handleChange}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          {/* DNI */}
+          <div className="flex flex-col md:flex-row md:items-center gap-y-2 mb-8">
+            <div className="w-full md:w-1/4">
+              <p>
+              DNI <span className="text-red-500">*</span>
+              </p>
+            </div>
+            <div className="flex-1">
+              <input
+                type="text"
+                className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
+                placeholder="DNI/NIE"
+                name="dni"
+                value={userProfile.dni}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+            {/* BIRTHDATE */}
+            <div className="flex flex-col md:flex-row md:items-center gap-y-2 mb-8">
+            <div className="w-full md:w-1/4">
+              <p>
+              Fecha de nacimiento <span className="text-red-500">*</span>
+              </p>
+            </div>
+            <div className="flex-1">
+              <input
+                type="text"
+                className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
+                placeholder="aaaa-mm-dd"
+                name="birthdate"
+                value={userProfile.birthdate}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -95,10 +160,11 @@ const Profile = () => {
             <div className="flex-1 ">
               <select
                 className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 appearance-none focus:ring-2 focus:ring-primary"
+                name="gender"
                 value={userProfile.gender}
-                // onChange={handleChange}
+                onChange={handleChange}
               >
-                <option value="-.-">-.-</option>
+                <option value="Null">-.-</option>
                 <option value="Hombre">Hombre</option>
                 <option value="Mujer">Mujer</option>
               </select>
@@ -116,8 +182,9 @@ const Profile = () => {
                 type="text"
                 className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
                 placeholder="Número de colegiado"
+                name="collegiateNumber"
                 value={userProfile.collegiateNumber}
-                // onChange={handleChange}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -128,25 +195,32 @@ const Profile = () => {
                 Especialidad <span className="text-red-500">*</span>
               </p>
             </div>
-            <div className="flex-1">
-              <input
-                type="text"
-                className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
-                placeholder="Especialidad"
-                value={userProfile.speciality}
-                // onChange={handleChange}
-              />
+            <div className="flex-1 ">
+              <select
+                className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 appearance-none focus:ring-2 focus:ring-primary"
+                name="gender"
+                value={userProfile.specialityId}
+                onChange={handleChange}
+              >
+                <option value="Null">-.-</option>
+                <option value="1">General</option>
+                <option value="2">Ortodoncia</option>
+                <option value="3">Endodoncia</option>
+                <option value="4">Periodoncia</option>
+                <option value="5">Odontopediatría</option>
+                <option value="6">Implantología dental</option>
+              </select>
             </div>
           </div>
         </form>
         <hr className="my-8 border-gray-500/30" />
         <div className="flex justify-end">
-          {/* <button
+          <button
             className="bg-primary/80 text-black py-2 px-4 rounded-lg hover:bg-primary transition-colors"
             onClick={(e) => handleSubmit(e)}
           >
             Guardar
-          </button> */}
+          </button>
         </div>
       </div>
       <div className="bg-secondary-100 p-8 rounded-xl mb-8">
@@ -185,6 +259,6 @@ const Profile = () => {
       </div>
     </>
   );
-        };
+};
 
 export default Profile;

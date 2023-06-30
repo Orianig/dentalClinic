@@ -26,7 +26,7 @@ export const getAllUsersProfile = async(credentials, token) => {
 }
 
 // UPDATE PROFILE
-export const updateProfile = async(credentials, token) => {
+export const updateProfile = async(token, credentials) => {
     const res = await axios.put(`${url}user/updateProfile`, credentials , config(token))
     return res.data
 }
