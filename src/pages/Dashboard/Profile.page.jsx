@@ -1,18 +1,15 @@
 //se importan los modulos
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProfile } from "../../services/user.service";
 
 const Profile = () => {
+  const [userProfile, setUserProfile] = useState("");
   // se accede al dispatch y al token de autentificacion desde el estado global
   const dispatch = useDispatch(); //dispatch permite actualizar el estado global de la aplicacion
   const authToken = useSelector((state) => state.user.credentials.token);
 
   useEffect(() => {
-    //  callback que se ejecuta después de que el componente se haya montado
-    fetchUserProfile(); //fetch ==> obtener datos
-  }, []); //solo se ejecuta una vez
-
   //obtiene el perfil de usuario
   const fetchUserProfile = async () => {
     try {
@@ -23,11 +20,16 @@ const Profile = () => {
         const userProfile = await getUserProfile(authToken);
         //obtengo los datos
         console.log(userProfile);
+        //actualiza el estado local
+        setUserProfile(userProfile.data);
       }
     } catch (error) {
       console.error("Error retrieving user profile:", error);
     }
   };
+        //  callback que se ejecuta después de que el componente se haya montado
+        fetchUserProfile(); //fetch ==> obtener datos
+      }, []); //solo se ejecuta una vez
 
   return (
     <>
@@ -50,7 +52,7 @@ const Profile = () => {
                   type="text"
                   className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
                   placeholder="Nombre"
-                  // value={user.name}
+                  value={userProfile.name}
                   // onChange={handleChange}
                 />
               </div>
@@ -60,7 +62,7 @@ const Profile = () => {
                   type="text"
                   className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
                   placeholder="Apellido(s)"
-                  // value={user.lastName}
+                  value={userProfile.lastName}
                   // onChange={handleChange}
                 />
               </div>
@@ -78,7 +80,7 @@ const Profile = () => {
                 type="text"
                 className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
                 placeholder="Número de contacto"
-                // value={user.phoneNumber}
+                value={userProfile.phoneNumber}
                 // onChange={handleChange}
               />
             </div>
@@ -93,7 +95,7 @@ const Profile = () => {
             <div className="flex-1 ">
               <select
                 className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 appearance-none focus:ring-2 focus:ring-primary"
-                // value={user.gender}
+                value={userProfile.gender}
                 // onChange={handleChange}
               >
                 <option value="-.-">-.-</option>
@@ -114,7 +116,7 @@ const Profile = () => {
                 type="text"
                 className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
                 placeholder="Número de colegiado"
-                // value={user.collegiateNumber}
+                value={userProfile.collegiateNumber}
                 // onChange={handleChange}
               />
             </div>
@@ -131,7 +133,7 @@ const Profile = () => {
                 type="text"
                 className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
                 placeholder="Especialidad"
-                // value={user.speciality}
+                value={userProfile.speciality}
                 // onChange={handleChange}
               />
             </div>
@@ -183,6 +185,6 @@ const Profile = () => {
       </div>
     </>
   );
-};
+        };
 
 export default Profile;
