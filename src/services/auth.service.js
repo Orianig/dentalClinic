@@ -4,16 +4,6 @@ import axios from 'axios';
 // defino constante url que contiene la dirreccion url base para las solicitudes
 const url = 'http://localhost:3000/'
 
-//se define una llamada que recibe el token como argumento
-// const config = (token) => {
-//     const headersConfig = {
-//         headers: { 
-//           "authorization": `Bearer ${token}`,  
-//         }
-//     };
-//     return headersConfig
-// }
-
 //REGISTRO
 export const register = async (credentials) => {
     const {data} = await axios.post(`${url}auth/register`,credentials)

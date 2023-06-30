@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
   name: "user",
   initialState: {
+    //se mete en credentials y data para devolver el nuevo estado en estas
     credentials: {
       token: "",
     },
@@ -13,18 +14,21 @@ export const userSlice = createSlice({
       lastName: "",
     },
   },
+  //reducers: especifican cómo se debe actualizar el estado de la aplicación en respuesta a acciones enviadas a Redux
   reducers: {
+    //state => estado actual... action => accion que se ha despachado
     login: (state, action) => {
       let { payload } = action;
-      (state.credentials = {
+      state.credentials = {
         token: payload.token,
-      }),
-        (state.data = {
+      },
+        state.data = {
+          //payload => informacion adicional a incluir en la accion
           email: payload.email,
-          role: payload.role,
+          role: payload.roleId,
           name: payload.name,
           lastName: payload.lastName,
-        });
+        };
     },
     logout: (state) => {
       return {

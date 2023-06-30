@@ -49,7 +49,8 @@ campos del formulario*/
       .then((result) => {
         console.log(user);
         // console.log("Respuesta de inicio de sesión recibida:", result);
-        setToken(result);
+        setToken(result);// guarda mi token ==> setTOKEN
+        console.log(token)
       })
       .catch((error) => {
         // console.error("Error en el inicio de sesión:", error);
@@ -76,6 +77,7 @@ campos del formulario*/
         navigate("/");
       }, 1000);
     }
+    console.log(token)
   }, [token, dispatch, navigate]);
 
   return (
