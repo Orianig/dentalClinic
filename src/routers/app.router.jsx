@@ -7,6 +7,7 @@ import LayoutAdmin from "../layouts/LayoutAdmin";
 //pages admin
 import Profile from "../pages/Dashboard/Profile.page";
 import Appointments from "../pages/Dashboard/Appointments";
+import NewAppointment from "../pages/Dashboard/NewAppointment";
 import Patients from "../pages/Dashboard/Patients";
 import Doctors from "../pages/Dashboard/Doctors";
 import AppointmentManagement from "../pages/Dashboard/AppointmentManagement";
@@ -24,6 +25,7 @@ export const AppRouter = () => {
         <Route path="/" element={<LayoutAdmin />}>
           <Route index element={<Profile />} />
           <Route path="appointments" element={<Appointments />} />
+          <Route path="newAppointment" element={<NewAppointment />} />
           <Route path="patients" element={<Patients />} />
           <Route path="doctors" element={<Doctors />} />
           <Route
