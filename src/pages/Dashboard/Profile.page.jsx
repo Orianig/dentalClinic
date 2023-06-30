@@ -1,11 +1,34 @@
-import React, { useState } from "react";
-// // import { Menu, Transition } from "@headlessui/react";
-// import { CgProfile} from "react-icons/cg";//profile
-// // import { FaUserDoctor} from "react-icons/fa";//doctor
-// // import { AiOutlineUser} from "react-icons/ai";//user
-// import { BsCalendarCheck} from "react-icons/bs";//calendar
+//se importan los modulos
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserProfile } from "../../services/user.service";
 
 const Profile = () => {
+  // se accede al dispatch y al token de autentificacion desde el estado global
+  const dispatch = useDispatch(); //dispatch permite actualizar el estado global de la aplicacion
+  const authToken = useSelector((state) => state.user.credentials.token);
+
+  useEffect(() => {
+    //  callback que se ejecuta después de que el componente se haya montado
+    fetchUserProfile(); //fetch ==> obtener datos
+  }, []); //solo se ejecuta una vez
+
+  //obtiene el perfil de usuario
+  const fetchUserProfile = async () => {
+    try {
+      if (authToken) {
+        //verifico el token
+        console.log(authToken);
+        //paso el token como argumento y recibo los datos desde mi bbdd
+        const userProfile = await getUserProfile(authToken);
+        //obtengo los datos
+        console.log(userProfile);
+      }
+    } catch (error) {
+      console.error("Error retrieving user profile:", error);
+    }
+  };
+
   return (
     <>
       <div className="bg-secondary-100 p-8 rounded-xl mb-8">
@@ -27,8 +50,8 @@ const Profile = () => {
                   type="text"
                   className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
                   placeholder="Nombre"
-                  // value={firstName}
-                  // onChange={handleFirstNameChange}
+                  // value={user.name}
+                  // onChange={handleChange}
                 />
               </div>
               {/* LASTNAME */}
@@ -37,8 +60,8 @@ const Profile = () => {
                   type="text"
                   className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
                   placeholder="Apellido(s)"
-                  // value={lastName}
-                  // onChange={handleLastNameChange}
+                  // value={user.lastName}
+                  // onChange={handleChange}
                 />
               </div>
             </div>
@@ -55,8 +78,8 @@ const Profile = () => {
                 type="text"
                 className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
                 placeholder="Número de contacto"
-                // value={contactNumber}
-                // onChange={handleContactNumberChange}
+                // value={user.phoneNumber}
+                // onChange={handleChange}
               />
             </div>
           </div>
@@ -70,8 +93,8 @@ const Profile = () => {
             <div className="flex-1 ">
               <select
                 className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 appearance-none focus:ring-2 focus:ring-primary"
-                // value={gender}
-                // onChange={handleGenderChange}
+                // value={user.gender}
+                // onChange={handleChange}
               >
                 <option value="-.-">-.-</option>
                 <option value="Hombre">Hombre</option>
@@ -91,8 +114,8 @@ const Profile = () => {
                 type="text"
                 className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
                 placeholder="Número de colegiado"
-                // value={contactNumber}
-                // onChange={handleContactNumberChange}
+                // value={user.collegiateNumber}
+                // onChange={handleChange}
               />
             </div>
           </div>
@@ -108,17 +131,20 @@ const Profile = () => {
                 type="text"
                 className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
                 placeholder="Especialidad"
-                // value={contactNumber}
-                // onChange={handleContactNumberChange}
+                // value={user.speciality}
+                // onChange={handleChange}
               />
             </div>
           </div>
         </form>
         <hr className="my-8 border-gray-500/30" />
         <div className="flex justify-end">
-          <button className="bg-primary/80 text-black py-2 px-4 rounded-lg hover:bg-primary transition-colors">
+          {/* <button
+            className="bg-primary/80 text-black py-2 px-4 rounded-lg hover:bg-primary transition-colors"
+            onClick={(e) => handleSubmit(e)}
+          >
             Guardar
-          </button>
+          </button> */}
         </div>
       </div>
       <div className="bg-secondary-100 p-8 rounded-xl mb-8">
