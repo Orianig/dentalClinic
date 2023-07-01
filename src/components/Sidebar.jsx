@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Logo from "../assets/images/logo/logo-7.png";
 import Logo1 from "../assets/images/logo/logo-general.png";
@@ -18,6 +19,8 @@ const Sidebar = () => {
   //showmenu se inicia en falso (no se muestra)
   //al llamar a setshowmenu se pasa de visible a no visible  el menu
   const [showMenu, setShowMenu] = useState(false);
+  const userRoleId = useSelector((state) => state.user.data.roleId);
+  console.log(userRoleId);
   // const [showSubmenu, setShowSubmenu] = useState(false);
   return (
     <>
@@ -31,27 +34,38 @@ const Sidebar = () => {
             <img className="h-20 w-auto" src={Logo} alt="Company" />
           </div>
           <nav>
+            {/* PROFILE - todos los usuario*/}
             <Link
               to="/"
               className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors"
+              onClick={() => setShowMenu(false)}
             >
               <FaUser className="text-primary" />
               Perfil
             </Link>
-            <Link
-              to="/Appointments"
-              className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors"
-            >
-              <BsCalendarPlusFill className="text-primary" />
-              Mis Citas
-            </Link>
-            <Link
-              to="/Users"
-              className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors"
-            >
-              <FaUsers className="text-primary" />
-              Usuarios
-            </Link>
+            {/* MIS CITAS - usuarios y doctores */}
+            {userRoleId !== 1 &&
+              (userRoleId !== 4 && (
+                <Link
+                  to="/Appointments"
+                  className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors"
+                  onClick={() => setShowMenu(false)}
+                >
+                  <BsCalendarPlusFill className="text-primary" />
+                  Mis Citas
+                </Link>
+              ))}
+            {/* USERS - oculto para los usuarios generales */}
+            {userRoleId !== 3 && (
+              <Link
+                to="/Users"
+                className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors"
+                onClick={() => setShowMenu(false)}
+              >
+                <FaUsers className="text-primary" />
+                Usuarios
+              </Link>
+            )}
             {/* <Link
               to="/Doctors"
               className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors"
@@ -59,20 +73,39 @@ const Sidebar = () => {
               <FaUserMd className="text-primary" />
               Doctores
             </Link> */}
-            <Link
-              to="/AppointmentManagement"
-              className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors"
-            >
-              <RiFolderUserFill className="text-primary" />
-              Gestion de citas
-            </Link>
-            <Link
-              to="/Treatments"
-              className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors"
-            >
-              <RiServiceFill className="text-primary" />
-              Servicios
-            </Link>
+            {/* APPOINTMENT MANAGEMENT - solo administrativos */}
+            {userRoleId !== 2 &&
+              (userRoleId !== 3 && (
+                <Link
+                  to="/AppointmentManagement"
+                  className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors"
+                  onClick={() => setShowMenu(false)}
+                >
+                  <RiFolderUserFill className="text-primary" />
+                  Gestion de citas
+                </Link>
+              ))}
+            {/* TREATMENTS - solo administrativos */}
+            {userRoleId !== 2 &&
+              (userRoleId !== 3 && (
+                <Link
+                  to="/Treatments"
+                  className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors"
+                  onClick={() => setShowMenu(false)}
+                >
+                  <RiServiceFill className="text-primary" />
+                  Servicios
+                </Link>
+              ))}
+              {/* NEW APPOINTMENT - todos los usuarios */}
+              <div className="mt-4 text-center">
+  <Link
+    to="/NewAppointment"
+    className="flex items-center justify-center gap-4 py-2 px-4 rounded-lg bg-primary font-semibold text-secondary-100 hover:text-primary hover:bg-gray-100 transition-colors"
+  >
+    CREAR CITA
+  </Link>
+</div>
           </nav>
         </div>
         <div>
