@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getAllAppointments } from "../../services/appointment.service";
-import Card from "../../components/Card";
+import CardAppointments from "../../components/CardAppointments";
 
 const AppointmentManagement = () => {
   const [appointments, setAppointments] = useState([]);
@@ -59,7 +59,7 @@ const AppointmentManagement = () => {
         </div>
       </div>
       {appointments.map((appointment) => (
-        <Card
+        <CardAppointments
           key={appointment.id}
           intervention={appointment.intervention.name}
           dentist={appointment.dentist.name + " " + appointment.dentist.lastName}
