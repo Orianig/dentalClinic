@@ -9,7 +9,7 @@ const CardAppointments = ({ intervention, dentist, patient, date, showPatient, s
     minute: "2-digit",
   });
   return (
-    <div className="bg-gray-100 p-2 md:p-2 mb-1 rounded-xl ">
+    <div className="bg-gray-100 p-2 md:p-2 mb-1 rounded-xl cursor-pointer">
       <div className="flex ml-24 justify-center ml-6 md:justify-between flex-wrap items-center gap-2 md:gap-4">
         {/* INTERVENTION */}
         <div className="w-full md:w-1/5">
