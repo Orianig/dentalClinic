@@ -9,7 +9,7 @@ export const userSlice = createSlice({
     },
     data: {
       email: "",
-      role: "",
+      roleId: "",
       name: "",
       lastName: "",
     },
@@ -25,7 +25,7 @@ export const userSlice = createSlice({
         state.data = {
           //payload => informacion adicional a incluir en la accion
           email: payload.email,
-          role: payload.roleId,
+          roleId: payload.roleId,
           name: payload.name,
           lastName: payload.lastName,
         };
@@ -38,7 +38,7 @@ export const userSlice = createSlice({
         },
         data: {
           email: "",
-          role: "",
+          roleId: "",
           name: "",
           lastName: "",
         },
