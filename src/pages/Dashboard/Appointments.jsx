@@ -3,11 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getUserAppointments } from "../../services/appointment.service";
 import CardAppointments from "../../components/CardAppointments";
+import CustomButton from '../../components/CustomButton';
+import { useNavigate } from "react-router-dom";
 
 const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
   const authToken = useSelector((state) => state.user.credentials.token);
   const userRoleId = useSelector((state) => state.user.data.roleId);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -27,7 +30,12 @@ const Appointment = () => {
 
   return (
     <div className="bg-secondary-100 p-8 rounded-xl mb-8">
+      <div className="flex flex-row justify-between md:items-center">
       <h1 className="text-xl text-primary font-bold">MIS CITAS</h1>
+      <div className="scale-75 md:scale-100 -mt-3 -mr-4 md:mt-o md:mr-0" >
+          <CustomButton onClick={() => navigate("/newAppointment")}>CREAR CITA</CustomButton>
+        </div>
+        </div>
       <hr className="my-8 border-gray-500/30" />
       {/* SUBTITULOS PARA LAS CARDS */}
       <div className="subtitleAppointmet hidden md:block">
