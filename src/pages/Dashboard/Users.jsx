@@ -6,6 +6,8 @@ import CardUsers from "../../components/CardUsers";
 const Users = () => {
   const [allUsers, setAllUsers] = useState([]);
   const authToken = useSelector((state) => state.user.credentials.token);
+  const userRoleId = useSelector((state) => state.user.data.roleId);
+console.log(userRoleId)
 
   useEffect(() => {
     const fetchAllUser = async () => {
@@ -52,16 +54,17 @@ const Users = () => {
           </div>
         </div>
       </div>
-      {allUsers.map((allUsers) => (
-        <CardUsers
-          key={allUsers.id}
-          name={allUsers.user.name}
-          lastName={allUsers.user.lastName}
-          speciality={allUsers.user.specialityId.name}
-          showSpeciality={(userRoleId === 1) | 2 | 4}
-        />
-      ))}
-    </div>
+      {allUsers.map((user) => (
+      <CardUsers
+        key={user.id}
+        name={user.name}
+        lastName={user.lastName}
+        roleId={user.roleId === 1 ? "Administrador" : user.roleId === 2 ? "Dentista" : user.roleId === 3 ? "Usuario general" : user.roleId === 4 ? "Gerente" : "" }
+        speciality={user.speciality?.name} // se usa un operador de encadenamiento para acceder al valor ==> ?
+        showSpeciality={userRoleId === 1 || userRoleId === 2 || userRoleId === 4}
+      />
+    ))}
+  </div>
   );
 };
 

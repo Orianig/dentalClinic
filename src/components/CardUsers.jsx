@@ -8,18 +8,18 @@ const CardUsers = ({ name, lastName, roleId, speciality, showSpeciality}) => {
         {/* FULL NAME */}
         <div className="w-full md:w-1/5">
           <p className="text-sm md:text-base">
-            <span className="text-gray-600 font-semibold">{name + lastName}</span>
+            <span className="text-gray-600 font-semibold">{name + " " + lastName}</span>
           </p>
         </div>
         {/* ROLEID */}
-        <div className="w-full md:w-1/5 ">
+        <div className="w-full md:w-1/6 ">
           <p className="text-sm md:text-base">
             <span className="text-gray-600 font-semibold">{roleId}</span>
           </p>
         </div>
-        {/* PATIENT */}
+        {/* SPECIALITY */}
         {showSpeciality && (
-          <div className="w-full md:w-1/5 ">
+          <div className="w-full md:w-1/6 ">
             <p className="text-sm md:text-base">
               <span className="text-gray-600 font-semibold">{speciality}</span>
             </p>
