@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getUserAppointments } from "../../services/appointment.service";
 import CardAppointments from "../../components/CardAppointments";
-import CustomButton from '../../components/CustomButton';
-import ModalAppointments from '../../components/ModalAppointments';
+import CustomButton from "../../components/CustomButton";
+import ModalAppointments from "../../components/ModalAppointments";
 import { useNavigate } from "react-router-dom";
+import InputSearch from "../../components/InputSearch";
 
 const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
@@ -31,12 +32,19 @@ const Appointment = () => {
 
   return (
     <div className="bg-secondary-100 p-8 rounded-xl mb-8">
-      <div className="flex flex-row justify-between md:items-center">
-      <h1 className="text-xl text-primary font-bold">MIS CITAS</h1>
-      <div className="scale-75 md:scale-100 -mt-3 -mr-4 md:mt-o md:mr-0" >
-          <CustomButton onClick={() => navigate("/newAppointment")}>CREAR CITA</CustomButton>
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+        <h1 className="text-xl text-primary font-bold mb-4 md:mb-0 md:text-left md:flex-grow">
+          MIS CITAS
+        </h1>
+        <div className=" -mr-6 md:mr-4 mb-2 scale-75 md:scale-100 md:mb-0 flex justify-end items-end">
+          <InputSearch />
         </div>
-        </div>
+        <div className="scale-80 md:scale-100 flex justify-end">
+          <CustomButton onClick={() => navigate("/newAppointment")}>
+            CREAR CITA
+          </CustomButton>
+        </div>{" "}
+      </div>
       <hr className="my-8 border-gray-500/30" />
       {/* SUBTITULOS PARA LAS CARDS */}
       <div className="subtitleAppointmet hidden md:block">
@@ -90,7 +98,7 @@ const Appointment = () => {
           showDentist={userRoleId === 3}
         />
       ))}
-      <ModalAppointments/>
+      <ModalAppointments />
     </div>
   );
 };
