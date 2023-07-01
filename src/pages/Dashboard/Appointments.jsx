@@ -1,18 +1,35 @@
 //se importan los modulos
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getUserAppointments } from "../../services/appointment.service";
+import { openModal} from "../../redux/slices/modal.slice";
+
+//componentes
 import CardAppointments from "../../components/CardAppointments";
 import CustomButton from "../../components/CustomButton";
 import ModalAppointments from "../../components/ModalAppointments";
-import { useNavigate } from "react-router-dom";
 import InputSearch from "../../components/InputSearch";
 
+//ir entre links
+import { useNavigate } from "react-router-dom";
+
 const Appointment = () => {
-  const [appointments, setAppointments] = useState([]);
+
+const dispatch = useDispatch();
+
+//hook para control de las citas
+const [appointments, setAppointments] = useState([]);
+//obtencion de datos desde el store
   const authToken = useSelector((state) => state.user.credentials.token);
   const userRoleId = useSelector((state) => state.user.data.roleId);
   const navigate = useNavigate();
+
+  //control de cierre del modal 
+  const handleOpenModal = (appointmentId) => {
+    console.log(appointmentId)
+    dispatch(openModal(appointmentId));
+  };
+
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -82,6 +99,7 @@ const Appointment = () => {
         </div>
       </div>
       {appointments.map((appointment) => (
+        <>
         <CardAppointments
           key={appointment.id}
           intervention={appointment.intervention.name}
@@ -96,7 +114,9 @@ const Appointment = () => {
           showPatient={userRoleId === 2}
           // Mostrar dentista si userRoleId es igual a 3
           showDentist={userRoleId === 3}
+          onClick={handleOpenModal}
         />
+        </>
       ))}
       <ModalAppointments />
     </div>

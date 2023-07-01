@@ -1,6 +1,6 @@
 import React from "react";
 
-const CardAppointments = ({ intervention, dentist, patient, date, showPatient, showDentist }) => {
+const CardAppointments = ({ intervention, dentist, patient, date, showPatient, showDentist, onClick }) => {
   const formattedDate = new Date(date).toLocaleString("es-ES", {
     year: "numeric",
     month: "2-digit",
@@ -8,8 +8,11 @@ const CardAppointments = ({ intervention, dentist, patient, date, showPatient, s
     hour: "2-digit",
     minute: "2-digit",
   });
+  const handleClick = event => {
+    onClick(event);
+  };
   return (
-    <div className="bg-gray-100 p-2 md:p-2 mb-1 rounded-xl cursor-pointer">
+    <div className="bg-gray-100 p-2 md:p-2 mb-1 rounded-xl cursor-pointer" onClick={handleClick}>
       <div className="flex ml-24 justify-center ml-6 md:justify-between flex-wrap items-center gap-2 md:gap-4">
         {/* INTERVENTION */}
         <div className="w-full md:w-1/5">

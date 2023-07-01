@@ -3,18 +3,27 @@ import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import CustomButton from "./CustomButton";
 import CardDoctors from "./CardDoctors";
+import { useSelector, useDispatch } from "react-redux";
+import { closeModal } from "../redux/slices/modal.slice";
 
 const ModalAppointments = () => {
+  
   //control de visibilidad del modal
-  const [open, setOpen] = useState(true);
+  const openFromStore = useSelector((state) => state.modal.isOpen);
+  const dispatch = useDispatch();
+  
+  //funcion de cierre del modal
+  const handleCloseModal = () => {
+    dispatch(closeModal());
+  };
 
   return (
     //animaciones de entrada y salida del modal
-    <Transition.Root show={open} as={Fragment}>
+    <Transition.Root show={openFromStore} as={Fragment}>
       {/* contenedor principal del modal  */}
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
-        {/* animaciones de entrada y salida del contenido */}
-        <Transition.Child
+    <Dialog as="div" className="relative z-10" onClose={handleCloseModal}>
+      {/* animaciones de entrada y salida del contenido */}
+      <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -129,8 +138,8 @@ const ModalAppointments = () => {
                       </div>
                     </div>
                   </div>
-                      {/* DETAILS */}
-                      <div className="flex flex-col md:flex-row md:items-start gap-y-2 mb-8">
+                  {/* DETAILS */}
+                  <div className="flex flex-col md:flex-row md:items-start gap-y-2 mb-8">
                     <div className="flex-1 flex flex-col md:flex-row md:items-center gap-4">
                       <div className="w-full md:w-1/2">
                         <p className="mb-2">Detalles</p>
@@ -144,8 +153,8 @@ const ModalAppointments = () => {
                           ></textarea>
                         </div>
                       </div>
-                  {/* DOCTORS */}
-                  <div className="w-full md:w-1/2">
+                      {/* DOCTORS */}
+                      <div className="w-full md:w-1/2">
                         <p className="mb-2">Doctores disponibles</p>
                         <div className="flex-1">
                           <div className="bg-gray-100 p-2 md:p-2 mb-1 rounded-xl cursor-pointer">
@@ -154,7 +163,7 @@ const ModalAppointments = () => {
                           </div>
                         </div>
                       </div>
-                      </div>
+                    </div>
                   </div>
                   {/* RESULTADOS */}
                   <div className="flex flex-col md:flex-row md:items-start gap-y-2 mb-8">
@@ -178,9 +187,8 @@ const ModalAppointments = () => {
                   <CustomButton onClick={() => navigate("/newAppointment")}>
                     EDITAR
                   </CustomButton>
-                  <CustomButton onClick={() => navigate("/newAppointment")}>
-                    CERRAR
-                  </CustomButton>
+                  {/* evento on clic para el cierre del modal */}
+                  <CustomButton onClick={handleCloseModal}>CERRAR</CustomButton>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
