@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import CustomButton from "./CustomButton";
 import CardDoctors from "./CardDoctors";
 import { useSelector, useDispatch } from "react-redux";
 import { closeModal } from "../redux/slices/modal.slice";
+import { setAppointments as setAppoinmentsStore } from "../redux/slices/appointments.slice";
 
 const ModalAppointments = () => {
-  
   //control de visibilidad del modal
   const openFromStore = useSelector((state) => state.modal.isOpen);
+  const appointmentId = useSelector((state) => state.modal.appointmentId);
   const dispatch = useDispatch();
-  
+  const appointmentList = useSelector((state) => state.appointments);
+
+  // Encuentra la cita correspondiente utilizando el appointmentId
+  const appointment = appointmentList.find(app => app.id === appointmentId);
+
   //funcion de cierre del modal
   const handleCloseModal = () => {
     dispatch(closeModal());
@@ -21,9 +26,9 @@ const ModalAppointments = () => {
     //animaciones de entrada y salida del modal
     <Transition.Root show={openFromStore} as={Fragment}>
       {/* contenedor principal del modal  */}
-    <Dialog as="div" className="relative z-10" onClose={handleCloseModal}>
-      {/* animaciones de entrada y salida del contenido */}
-      <Transition.Child
+      <Dialog as="div" className="relative z-10" onClose={handleCloseModal}>
+        {/* animaciones de entrada y salida del contenido */}
+        <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"

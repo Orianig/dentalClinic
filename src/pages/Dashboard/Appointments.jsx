@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserAppointments } from "../../services/appointment.service";
-import { openModal} from "../../redux/slices/modal.slice";
+import { openModal } from "../../redux/slices/modal.slice";
+import { setAppointments as setAppoinmentsStore } from "../../redux/slices/appointments.slice";
 
 //componentes
 import CardAppointments from "../../components/CardAppointments";
@@ -14,38 +15,39 @@ import InputSearch from "../../components/InputSearch";
 import { useNavigate } from "react-router-dom";
 
 const Appointment = () => {
+  const dispatch = useDispatch();
 
-const dispatch = useDispatch();
-
-//hook para control de las citas
-const [appointments, setAppointments] = useState([]);
-//obtencion de datos desde el store
+  //hook para control de las citas
+  const [appointments, setAppointments] = useState([]);
+  //obtencion de datos desde el store
   const authToken = useSelector((state) => state.user.credentials.token);
   const userRoleId = useSelector((state) => state.user.data.roleId);
   const navigate = useNavigate();
 
-  //control de cierre del modal 
+  //control de cierre del modal
   const handleOpenModal = (appointmentId) => {
-    console.log(appointmentId)
     dispatch(openModal(appointmentId));
   };
-
 
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
         // Obtener las citas del usuario utilizando el token del estado de Redux
         const userAppointments = await getUserAppointments(authToken);
-        console.log(authToken);
         // Establecer las citas en el estado local
         setAppointments(userAppointments.data);
-        console.log(userAppointments.data);
       } catch (error) {
         console.log("Error al obtener las citas del usuario:", error);
       }
     };
     fetchAppointments();
   }, [authToken]);
+
+  useEffect(() => {
+    if (appointments?.length) {
+      dispatch(setAppoinmentsStore(appointments));
+    }
+  }, [appointments, dispatch]);
 
   return (
     <div className="bg-secondary-100 p-8 rounded-xl mb-8">
@@ -100,22 +102,22 @@ const [appointments, setAppointments] = useState([]);
       </div>
       {appointments.map((appointment) => (
         <>
-        <CardAppointments
-          key={appointment.id}
-          intervention={appointment.intervention.name}
-          dentist={
-            appointment.dentist.name + " " + appointment.dentist.lastName
-          }
-          patient={
-            appointment.patient.name + " " + appointment.patient.lastName
-          }
-          date={appointment.date}
-          // Mostrar paciente si userRoleId es igual a 2
-          showPatient={userRoleId === 2}
-          // Mostrar dentista si userRoleId es igual a 3
-          showDentist={userRoleId === 3}
-          onClick={handleOpenModal}
-        />
+          <CardAppointments
+            key={appointment.id}
+            intervention={appointment.intervention.name}
+            dentist={
+              appointment.dentist.name + " " + appointment.dentist.lastName
+            }
+            patient={
+              appointment.patient.name + " " + appointment.patient.lastName
+            }
+            date={appointment.date}
+            // Mostrar paciente si userRoleId es igual a 2
+            showPatient={userRoleId === 2}
+            // Mostrar dentista si userRoleId es igual a 3
+            showDentist={userRoleId === 3}
+            onClick={() => handleOpenModal(appointment.id)}
+          />
         </>
       ))}
       <ModalAppointments />

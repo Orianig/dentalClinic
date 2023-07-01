@@ -12,7 +12,6 @@ const Profile = () => {
   const dispatch = useDispatch(); //dispatch permite actualizar el estado global de la aplicacion
   const authToken = useSelector((state) => state.user.credentials.token);
   const userRoleId = useSelector((state) => state.user.data.roleId);
-  console.log(userRoleId);
 
   useEffect(() => {
     //obtiene el perfil de usuario
