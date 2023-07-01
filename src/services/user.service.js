@@ -39,6 +39,6 @@ export const updateProfileByAdmin = async(id,credentials, token) => {
 
 // DELETE PROFILE
 export const deleteUser = async(token, id) => {
-    const res = await axios.delete(`${url}/user/:${id}`, config(token))
+    const res = await axios.delete(`${url}user/:${id}`, config(token))
     return res.data
 }
