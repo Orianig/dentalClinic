@@ -46,19 +46,19 @@ const Sidebar = () => {
               Mis Citas
             </Link>
             <Link
-              to="/Patients"
+              to="/Users"
               className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors"
             >
               <FaUsers className="text-primary" />
-              Pacientes
+              Usuarios
             </Link>
-            <Link
+            {/* <Link
               to="/Doctors"
               className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors"
             >
               <FaUserMd className="text-primary" />
               Doctores
-            </Link>
+            </Link> */}
             <Link
               to="/AppointmentManagement"
               className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors"

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card = ({ intervention, dentist, patient, date, showPatient, showDentist }) => {
+const CardAppointments = ({ intervention, dentist, patient, date, showPatient, showDentist }) => {
   const formattedDate = new Date(date).toLocaleString("es-ES", {
     year: "numeric",
     month: "2-digit",
@@ -43,4 +43,4 @@ const Card = ({ intervention, dentist, patient, date, showPatient, showDentist }
     </div>
   );
 };
-export default Card;
+export default CardAppointments;

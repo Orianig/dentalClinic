@@ -20,8 +20,8 @@ export const getUserProfile = async(token) => {
 }
 
 // ALL USERS PROFILE
-export const getAllUsersProfile = async(credentials, token) => {
-    const res = await axios.get(`${url}user/allProfiles`, credentials , config(token))
+export const getAllUsersProfile = async(token) => {
+    const res = await axios.get(`${url}user/allProfiles`, config(token))
     return res.data
 }
 

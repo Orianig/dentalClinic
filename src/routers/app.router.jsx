@@ -8,8 +8,8 @@ import LayoutAdmin from "../layouts/LayoutAdmin";
 import Profile from "../pages/Dashboard/Profile.page";
 import Appointments from "../pages/Dashboard/Appointments";
 import NewAppointment from "../pages/Dashboard/NewAppointment";
-import Patients from "../pages/Dashboard/Patients";
-import Doctors from "../pages/Dashboard/Doctors";
+import Users from "../pages/Dashboard/Users";
+// import Doctors from "../pages/Dashboard/Doctors";
 import AppointmentManagement from "../pages/Dashboard/AppointmentManagement";
 import Treatments from "../pages/Dashboard/Treatments";
 import NotFound from "../pages/404/notFound.page";
@@ -26,8 +26,8 @@ export const AppRouter = () => {
           <Route index element={<Profile />} />
           <Route path="appointments" element={<Appointments />} />
           <Route path="newAppointment" element={<NewAppointment />} />
-          <Route path="patients" element={<Patients />} />
-          <Route path="doctors" element={<Doctors />} />
+          <Route path="users" element={<Users />} />
+          {/* <Route path="doctors" element={<Doctors />} /> */}
           <Route
             path="appointmentManagement"
             element={<AppointmentManagement />}
