@@ -1,11 +1,12 @@
 import React from "react";
 import CardDoctors from "../../components/CardDoctors";
+import CustomButton from "../../components/CustomButton";
 
 const NewAppointment = () => {
   return (
     <>
       <div className="bg-secondary-100 p-8 rounded-xl mb-8">
-        <h1 className="text-xl text-primary font-bold">PERFIL DE USUARIO</h1>
+        <h1 className="text-xl text-primary font-bold">CREAR NUEVA CITA</h1>
         <hr className="my-8 border-gray-500/30" />
         <form>
           <div className="flex flex-col gap-y-2 md:flex-row md:items-center mb-4">
@@ -17,7 +18,7 @@ const NewAppointment = () => {
           <div className="flex flex-col md:flex-row md:items-center gap-y-2 mb-8">
             <div className="flex-1 flex items-center gap-4">
               <div className="w-full">
-                <p className="mb-2">Nombre</p>
+                <p className="mb-2">DNI o Correo Eléctronico</p>
                 <input
                   type="text"
                   className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
@@ -28,7 +29,7 @@ const NewAppointment = () => {
               </div>
               {/* LASTNAME */}
               <div className="w-full">
-                <p className="mb-2">Apellido(s)</p>
+                <p className="mb-2">Nombre y Apellido</p>
                 <input
                   type="text"
                   className="w-full py-2 px-4 outline-none rounded-lg bg-secondary-900 focus:ring-2 focus:ring-primary"
@@ -130,6 +131,18 @@ const NewAppointment = () => {
             </div>
           </div>
         </form>
+      </div>
+      <div className="scale-75 md:scale-100 flex -ml-8 md:ml-0 justify-start md:justify-end gap-2 md:gap-4">
+        <CustomButton
+          onClick={() => navigate("/newAppointment")}
+        >
+          DESCARTAR
+        </CustomButton>
+        <CustomButton
+          onClick={() => navigate("/newAppointment")}
+        >
+          GUARDAR 
+        </CustomButton>
       </div>
     </>
   );
