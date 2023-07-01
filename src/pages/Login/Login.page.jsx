@@ -67,7 +67,7 @@ campos del formulario*/
         loginStore({
           token: token,
           email: decoded.email,
-          role: decoded.roleId,
+          roleId: decoded.roleId,
           name: decoded.name,
           lastName: decoded.lastName,
         })
