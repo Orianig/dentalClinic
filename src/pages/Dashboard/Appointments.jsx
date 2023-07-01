@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { getUserAppointments } from "../../services/appointment.service";
 import CardAppointments from "../../components/CardAppointments";
 import CustomButton from '../../components/CustomButton';
+import ModalAppointments from '../../components/ModalAppointments';
 import { useNavigate } from "react-router-dom";
 
 const Appointment = () => {
@@ -89,6 +90,7 @@ const Appointment = () => {
           showDentist={userRoleId === 3}
         />
       ))}
+      <ModalAppointments/>
     </div>
   );
 };
