@@ -50,78 +50,88 @@ const Appointment = () => {
   }, [appointments, dispatch]);
 
   return (
-    <div className="bg-secondary-100 p-8 rounded-xl mb-8">
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-        <h1 className="text-xl text-primary font-bold mb-4 md:mb-0 md:text-left md:flex-grow">
-          MIS CITAS
-        </h1>
-        <div className=" -mr-6 md:mr-4 mb-2 scale-75 md:scale-100 md:mb-0 flex justify-end items-end">
-          <InputSearch />
+    <>
+      <div className="bg-secondary-100 p-8 rounded-xl mb-8">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+          <h1 className="text-xl text-primary font-bold mb-4 md:mb-0 md:text-left md:flex-grow">
+            MIS CITAS
+          </h1>
+          <div className=" -mr-6 md:mr-4 mb-2 scale-75 md:scale-100 md:mb-0 flex justify-end items-end">
+            <InputSearch />
+          </div>
+          <div className="scale-80 md:scale-100 flex justify-end">
+            <CustomButton onClick={() => navigate("/newAppointment")}>
+              CREAR CITA
+            </CustomButton>
+          </div>{" "}
         </div>
-        <div className="scale-80 md:scale-100 flex justify-end">
-          <CustomButton onClick={() => navigate("/newAppointment")}>
-            CREAR CITA
-          </CustomButton>
-        </div>{" "}
-      </div>
-      <hr className="my-8 border-gray-500/30" />
-      {/* SUBTITULOS PARA LAS CARDS */}
-      <div className="subtitleAppointmet hidden md:block">
-        <div className=" p-2 md:p-2 rounded-xl mb-4">
-          <div className="flex justify-center ml-20 md:justify-between flex-wrap items-center gap-2 md:gap-4">
-            {/* INTERVENTION */}
-            <div className="w-full md:w-1/5">
-              <p className="text-sm md:text-base">
-                <span className="font-semibold">INTERVENCIÓN</span>
-              </p>
-            </div>
-            {/* DOCTOR */}
-            {userRoleId !== 2 && (
-              <div className="w-full md:w-1/4">
+        <hr className="my-8 border-gray-500/30" />
+        {/* SUBTITULOS PARA LAS CARDS */}
+        <div className="subtitleAppointmet hidden md:block">
+          <div className=" p-2 md:p-2 rounded-xl mb-4">
+            <div className="flex justify-center ml-20 md:justify-between flex-wrap items-center gap-2 md:gap-4">
+              {/* INTERVENTION */}
+              <div className="w-full md:w-1/5">
                 <p className="text-sm md:text-base">
-                  <span className="font-semibold">DENTISTA</span>
+                  <span className="font-semibold">INTERVENCIÓN</span>
                 </p>
               </div>
-            )}
-            {/* PATIENTS */}
-            {userRoleId !== 3 && (
-              <div className="w-full md:w-1/4">
+              {/* DOCTOR */}
+              {userRoleId !== 2 && (
+                <div className="w-full md:w-1/4">
+                  <p className="text-sm md:text-base">
+                    <span className="font-semibold">DENTISTA</span>
+                  </p>
+                </div>
+              )}
+              {/* PATIENTS */}
+              {userRoleId !== 3 && (
+                <div className="w-full md:w-1/4">
+                  <p className="text-sm md:text-base">
+                    <span className="font-semibold">PACIENTES</span>
+                  </p>
+                </div>
+              )}
+              {/* FECHA */}
+              <div className="w-full md:w-1/6">
                 <p className="text-sm md:text-base">
-                  <span className="font-semibold">PACIENTES</span>
+                  <span className="font-semibold">FECHA</span>
                 </p>
               </div>
-            )}
-            {/* FECHA */}
-            <div className="w-full md:w-1/6">
-              <p className="text-sm md:text-base">
-                <span className="font-semibold">FECHA DE CITA</span>
-              </p>
+              {/* HORARIO */}
+              <div className="w-full md:w-1/6">
+                <p className="text-sm md:text-base">
+                  <span className="font-semibold">HORARIO</span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
+        {appointments.map((appointment) => (
+          <>
+            <CardAppointments
+              key={appointment.id}
+              intervention={appointment.intervention.name}
+              dentist={
+                appointment.dentist.name + " " + appointment.dentist.lastName
+              }
+              patient={
+                appointment.patient.name + " " + appointment.patient.lastName
+              }
+              date={appointment.date}
+              startTime={appointment.startTime}
+              endTime={appointment.endTime}
+              // Mostrar paciente si userRoleId es igual a 2
+              showPatient={userRoleId === 2}
+              // Mostrar dentista si userRoleId es igual a 3
+              showDentist={userRoleId === 3}
+              onClick={() => handleOpenModal(appointment.id)}
+            />
+          </>
+        ))}
+        <ModalAppointments />
       </div>
-      {appointments.map((appointment) => (
-        <>
-          <CardAppointments
-            key={appointment.id}
-            intervention={appointment.intervention.name}
-            dentist={
-              appointment.dentist.name + " " + appointment.dentist.lastName
-            }
-            patient={
-              appointment.patient.name + " " + appointment.patient.lastName
-            }
-            date={appointment.date}
-            // Mostrar paciente si userRoleId es igual a 2
-            showPatient={userRoleId === 2}
-            // Mostrar dentista si userRoleId es igual a 3
-            showDentist={userRoleId === 3}
-            onClick={() => handleOpenModal(appointment.id)}
-          />
-        </>
-      ))}
-      <ModalAppointments />
-    </div>
+    </>
   );
 };
 

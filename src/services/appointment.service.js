@@ -11,20 +11,20 @@ const config = (token) => {
   };
 
 //CREAR CITA
-export const createAppointment = async (credentials) => {
-    const {data} = await axios.post(`${url}appointments/newAppointment`,credentials)
+export const createAppointment = async (appointment) => {
+    const {data} = await axios.post(`${url}appointments/newAppointment`,appointment)
     return data
 }
 
 // MODIFICAR CITA
-export const updateAppointment = async(token, id) => {
-    const res = await axios.put(`${url}appointments/:${id}`, credentials , config(token))
+export const updateAppointment = async(token, id, appointment) => {
+    const res = await axios.put(`${url}appointments/${id}`, appointment , config(token))
     return res.data
 } //REVISAR LO DE ID
 
 // ELIMINAR CITA
 export const deleteAppointment = async(token, id) => {
-    const res = await axios.delete(`${url}appointments/:${id}`, config(token))
+    const res = await axios.delete(`${url}appointments/${id}`, config(token))
     return res.data
 }
 

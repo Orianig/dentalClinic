@@ -1,13 +1,11 @@
 import React from "react";
+import { format } from '../common/datesUtils'
 
-const CardAppointments = ({ intervention, dentist, patient, date, showPatient, showDentist, onClick }) => {
-  const formattedDate = new Date(date).toLocaleString("es-ES", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+
+const CardAppointments = ({ intervention, endTime, dentist, patient, date, startTime, showPatient, showDentist, onClick }) => {
+  const formattedDate = format(new Date(date), 'dd-MM-yyyy');
+  const formattedStartTime = startTime.slice(0, 5);
+  const formattedEndTime = endTime.slice(0, 5);
   const handleClick = event => {
     onClick(event);
   };
@@ -40,6 +38,12 @@ const CardAppointments = ({ intervention, dentist, patient, date, showPatient, s
         <div className="w-full md:w-1/6">
           <p className="text-sm md:text-base">
             <span className="text-gray-600 font-semibold">{formattedDate}</span>
+          </p>
+        </div>
+        {/* HORARIO */}
+        <div className="w-full md:w-1/6">
+          <p className="text-sm md:text-base">
+            <span className="text-gray-600 font-semibold">{`${formattedStartTime} - ${formattedEndTime}`}</span>
           </p>
         </div>
       </div>

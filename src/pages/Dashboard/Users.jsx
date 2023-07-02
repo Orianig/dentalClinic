@@ -7,7 +7,6 @@ const Users = () => {
   const [allUsers, setAllUsers] = useState([]);
   const authToken = useSelector((state) => state.user.credentials.token);
   const userRoleId = useSelector((state) => state.user.data.roleId);
-console.log(userRoleId)
 
   useEffect(() => {
     const fetchAllUser = async () => {
@@ -15,11 +14,7 @@ console.log(userRoleId)
         const usersProfiles = await getAllUsersProfile(authToken);
         if (usersProfiles.data) {
           setAllUsers(usersProfiles.data);
-          console.log(usersProfiles.data);
-          console.log(setAllUsers);
         }
-        console.log(usersProfiles.data);
-        console.log(usersProfiles);
       } catch (error) {
         console.log("Error al obtener los perfiles de usuario:", error);
       }
@@ -55,16 +50,28 @@ console.log(userRoleId)
         </div>
       </div>
       {allUsers.map((user) => (
-      <CardUsers
-        key={user.id}
-        name={user.name}
-        lastName={user.lastName}
-        roleId={user.roleId === 1 ? "Administrador" : user.roleId === 2 ? "Dentista" : user.roleId === 3 ? "Usuario general" : user.roleId === 4 ? "Gerente" : "" }
-        speciality={user.speciality?.name} // se usa un operador de encadenamiento para acceder al valor ==> ?
-        showSpeciality={userRoleId === 1 || userRoleId === 2 || userRoleId === 4}
-      />
-    ))}
-  </div>
+        <CardUsers
+          key={user.id}
+          name={user.name}
+          lastName={user.lastName}
+          roleId={
+            user.roleId === 1
+              ? "Administrador"
+              : user.roleId === 2
+              ? "Dentista"
+              : user.roleId === 3
+              ? "Usuario general"
+              : user.roleId === 4
+              ? "Gerente"
+              : ""
+          }
+          speciality={user.speciality?.name} // se usa un operador de encadenamiento para acceder al valor ==> ?
+          showSpeciality={
+            userRoleId === 1 || userRoleId === 2 || userRoleId === 4
+          }
+        />
+      ))}
+    </div>
   );
 };
 
