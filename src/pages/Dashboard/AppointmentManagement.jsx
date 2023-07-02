@@ -6,18 +6,17 @@ import CardAppointments from "../../components/CardAppointments";
 
 const AppointmentManagement = () => {
   const [appointments, setAppointments] = useState([]);
-  const authToken = useSelector(state => state.user.credentials.token);
+  const authToken = useSelector((state) => state.user.credentials.token);
 
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
         // Obtener las citas del usuario utilizando el token del estado de Redux
-        const userAppointments = await getAllAppointments(authToken);
-        if (userAppointments.data) {
-          setAppointments(userAppointments.data);
-          
+        const allAppointments = await getAllAppointments(authToken);
+        if (allAppointments.data) {
+          setAppointments(allAppointments.data);
         }
-        console.log(userAppointments)
+        console.log(allAppointments);
       } catch (error) {
         console.log("Error al obtener las citas del usuario:", error);
       }
@@ -25,6 +24,7 @@ const AppointmentManagement = () => {
     fetchAppointments();
   }, [authToken]);
 
+  
   return (
     <div className="bg-secondary-100 p-8 rounded-xl mb-8">
       <h1 className="text-xl text-primary font-bold">MIS CITAS</h1>
@@ -45,7 +45,7 @@ const AppointmentManagement = () => {
             </p>
           </div>
           {/* PATIENT */}
-                    <div className="w-full md:w-1/6">
+          <div className="w-full md:w-1/6">
             <p className="text-sm md:text-base">
               <span className="font-semibold">PACIENTE</span>
             </p>
@@ -53,7 +53,13 @@ const AppointmentManagement = () => {
           {/* FECHA */}
           <div className="w-full md:w-1/6">
             <p className="text-sm md:text-base">
-              <span className="font-semibold">FECHA DE CITA</span>
+              <span className="font-semibold">FECHA</span>
+            </p>
+          </div>
+          {/* HORARIO */}
+          <div className="w-full md:w-1/6">
+            <p className="text-sm md:text-base">
+              <span className="font-semibold">HORARIO</span>
             </p>
           </div>
         </div>
@@ -62,9 +68,15 @@ const AppointmentManagement = () => {
         <CardAppointments
           key={appointment.id}
           intervention={appointment.intervention.name}
-          dentist={appointment.dentist.name + " " + appointment.dentist.lastName}
-          patient={appointment.patient.name + " " + appointment.patient.lastName}
+          dentist={
+            appointment.dentist.name + " " + appointment.dentist.lastName
+          }
+          patient={
+            appointment.patient.name + " " + appointment.patient.lastName
+          }
           date={appointment.date}
+          startTime={appointment.startTime}
+              endTime={appointment.endTime}
           showPatient={true}
           showDentist={true}
         />
