@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Logo from "../assets/images/logo/logo-7.png";
-import Logo1 from "../assets/images/logo/logo-general.png";
+// import Logo1 from "../assets/images/logo/logo-general.png";
+import { logout } from "../redux/slices/user.slice";
+
 //ICONS
 import { FaUser, FaUserMd, FaUsers } from "react-icons/fa"; //profile - doctor - pacientes - citas
 import { BsCalendarPlusFill } from "react-icons/bs"; //citas
@@ -21,6 +23,12 @@ const Sidebar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const userRoleId = useSelector((state) => state.user.data.roleId);
   // const [showSubmenu, setShowSubmenu] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <>
       <div
@@ -107,8 +115,9 @@ const Sidebar = () => {
         <div>
           <nav>
             <Link
-              to="/"
+              to="/login"
               className="flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors"
+              onClick={handleLogout}
             >
               <RiLogoutCircleRLine className="text-primary" />
               Cerrar sesión
