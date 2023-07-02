@@ -1,7 +1,12 @@
 import React from "react";
 import { BsSearch } from "react-icons/bs"; // Importa BsSearch de 'react-icons/bs'
 
-const InputSearch = () => {
+const InputSearch = ({ onSearch }) => {
+  const handleInputChange = (event) => {
+    const term = event.target.value;
+    onSearch(term);
+  };
+
   return (
     <form className="max-w-sm">
       <div className="relative">
@@ -10,6 +15,7 @@ const InputSearch = () => {
           type="text"
           placeholder="Buscar"
           className="w-full py-2 pl-10 pr-3 text-gray-500 rounded-lg outline-none bg-gray-50 focus:ring-2 focus:ring-primary border-none text-sm"
+          onChange={handleInputChange}
         />
       </div>
     </form>
