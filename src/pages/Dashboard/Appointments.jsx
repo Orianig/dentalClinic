@@ -19,7 +19,6 @@ const Appointment = () => {
 
   //hook para control de las citas
   const [appointments, setAppointments] = useState([]);
-
   //obtencion de datos desde el store
   const authToken = useSelector((state) => state.user.credentials.token);
   const userRoleId = useSelector((state) => state.user.data.roleId);
@@ -37,6 +36,7 @@ const Appointment = () => {
         const userAppointments = await getUserAppointments(authToken);
         // Establecer las citas en el estado local
         setAppointments(userAppointments.data);
+        console.log(userAppointments.data)
       } catch (error) {
         console.log("Error al obtener las citas del usuario:", error);
       }
@@ -51,7 +51,6 @@ const Appointment = () => {
     }
   }, [appointments, dispatch]);
 
-
   return (
     <>
       <div className="bg-secondary-100 p-8 rounded-xl mb-8">
@@ -60,7 +59,7 @@ const Appointment = () => {
             MIS CITAS
           </h1>
           <div className=" -mr-6 md:mr-4 mb-2 scale-75 md:scale-100 md:mb-0 flex justify-end items-end">
-            <InputSearch />
+            <InputSearch/>
           </div>
           <div className="scale-80 md:scale-100 flex justify-end">
             <CustomButton onClick={() => navigate("/newAppointment")}>
