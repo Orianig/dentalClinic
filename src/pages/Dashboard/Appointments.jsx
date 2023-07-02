@@ -19,6 +19,7 @@ const Appointment = () => {
 
   //hook para control de las citas
   const [appointments, setAppointments] = useState([]);
+
   //obtencion de datos desde el store
   const authToken = useSelector((state) => state.user.credentials.token);
   const userRoleId = useSelector((state) => state.user.data.roleId);
@@ -49,6 +50,7 @@ const Appointment = () => {
       dispatch(setAppoinmentsStore(appointments));
     }
   }, [appointments, dispatch]);
+
 
   return (
     <>
