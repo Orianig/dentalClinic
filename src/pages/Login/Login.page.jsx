@@ -66,11 +66,13 @@ campos del formulario*/
       dispatch(
         loginStore({
           token: token,
+          id: decoded.userId,
           email: decoded.email,
           roleId: decoded.roleId,
           name: decoded.name,
           lastName: decoded.lastName,
         })
+
       );
       toast.success("Bienvenido " + decoded.name);
       setTimeout(() => {
