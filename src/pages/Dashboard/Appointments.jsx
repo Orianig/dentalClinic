@@ -43,6 +43,7 @@ const Appointment = () => {
     fetchAppointments();
   }, [authToken]);
 
+    //se ejecuta cada vez que cambie el valor de appointments o dispatch (actualicen las citas)
   useEffect(() => {
     if (appointments?.length) {
       dispatch(setAppoinmentsStore(appointments));

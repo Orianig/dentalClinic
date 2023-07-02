@@ -14,14 +14,18 @@ import { updateAppointment } from "../services/appointment.service";
 const ModalAppointments = () => {
   //hook para control de las citas
   const [appointment, setAppointment] = useState({});
+  //se inician como objetos vacios
   const [doctorList, setDoctorList] = useState([]);
 
+  //seleccion de datos del store
   const authToken = useSelector((state) => state.user.credentials.token);
   const openFromStore = useSelector((state) => state.modal.isOpen);
   const appointmentId = useSelector((state) => state.modal.appointmentId);
   const dispatch = useDispatch();
   const appointmentList = useSelector((state) => state.appointments);
 
+  //efecto para la carga inicial
+  //obtencion de los doctores para su eleccion en la cita
   useEffect(() => {
     const fetchAllUser = async () => {
       try {
@@ -37,6 +41,7 @@ const ModalAppointments = () => {
     fetchAllUser();
   }, [authToken]);
 
+  //este se aplica cuando se selecciona una cita, me la trae en detalle
   useEffect(() => {
     if (appointmentId && appointmentList.length) {
       setAppointment(appointmentList.find((app) => app.id === appointmentId));
@@ -49,6 +54,7 @@ const ModalAppointments = () => {
     dispatch(closeModal());
   };
 
+  //se ejecuta cuando se produce un cambio en la cita
   const handleChange = (event) => {
     const { name, value } = event.target;
     //actualiza el estado
@@ -58,6 +64,7 @@ const ModalAppointments = () => {
     }));
   };
 
+  //guarda las citas
   const handleSave = async () => {
     const form = {
       date: appointment?.date,
@@ -73,6 +80,7 @@ const ModalAppointments = () => {
       toast.error("No ha sido posible modificar sus datos");
     }
     dispatch(closeModal());
+    window.location.reload();
   };
 
   return (
