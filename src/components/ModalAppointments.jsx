@@ -23,6 +23,9 @@ const ModalAppointments = () => {
   const appointmentId = useSelector((state) => state.modal.appointmentId);
   const dispatch = useDispatch();
   const appointmentList = useSelector((state) => state.appointments);
+  const userRoleId = useSelector((state) => state.user.roleId);
+  const DENTIST_ROLE_ID = 2;
+  const PATIENT_ROLE_ID = 3;
 
   //efecto para la carga inicial
   //obtencion de los doctores para su eleccion en la cita
@@ -32,7 +35,7 @@ const ModalAppointments = () => {
         const usersProfiles = await getAllUsersProfile(authToken);
         if (usersProfiles.data) {
           // el id 2 es el id de los doctores
-          setDoctorList(usersProfiles.data.filter((user) => user.roleId === 2));
+          setDoctorList(usersProfiles.data.filter((user) => user.roleId === DENTIST_ROLE_ID));
         }
       } catch (error) {
         console.log("Error al obtener los perfiles de usuario:", error);
@@ -72,6 +75,8 @@ const ModalAppointments = () => {
       endTime: appointment?.endTime,
       interventionId: appointment?.interventionId,
       startTime: appointment?.startTime,
+      details: appointment.details,
+      results: appointment.results,
     };
     try {
       await updateAppointment(authToken, appointment.id, form);
@@ -242,18 +247,33 @@ const ModalAppointments = () => {
                   {/* RESULTADOS */}
                   <div className="flex flex-col md:flex-row md:items-start gap-y-2 mb-8">
                     <div className="flex-1 flex flex-col md:flex-row md:items-center gap-4">
-                      <div className="w-full md:w-1/2">
-                        <p className="mb-2">Resultados</p>
-                        <div className="flex-1">
-                          <textarea
-                            className="w-full bg-gray-100 p-2 md:p-2 mb-1 rounded-xl border-none focus:ring-2 focus:ring-primary resize-y h-auto overflow-y-auto"
-                            placeholder="Resultados obtenidos"
-                            name="details"
-                            value={appointment?.results}
-                            onChange={handleChange}
-                          ></textarea>
+                      {userRoleId === 3 ? (
+                        <div className="w-full md:w-1/2">
+                          <p className="mb-2">Resultados</p>
+                          <div className="flex-1">
+                            <textarea
+                              className="w-full bg-gray-100 p-2 md:p-2 mb-1 rounded-xl border-none focus:ring-2 focus:ring-primary resize-y h-auto overflow-y-auto"
+                              placeholder="Resultados obtenidos"
+                              name="results"
+                              value={appointment.results}
+                              ddisabled={userRoleId === PATIENT_ROLE_ID}
+                            ></textarea>
+                          </div>
                         </div>
-                      </div>
+                      ) : (
+                        <div className="w-full md:w-1/2">
+                          <p className="mb-2">Resultados</p>
+                          <div className="flex-1">
+                            <textarea
+                              className="w-full bg-gray-100 p-2 md:p-2 mb-1 rounded-xl border-none focus:ring-2 focus:ring-primary resize-y h-auto overflow-y-auto"
+                              placeholder="Resultados obtenidos"
+                              name="results"
+                              value={appointment.results}
+                              onChange={handleChange}
+                            ></textarea>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </form>
