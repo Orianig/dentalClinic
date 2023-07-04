@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserAppointments } from "../../services/appointment.service";
 import { openModal } from "../../redux/slices/modal.slice";
 import { setAppointments as setAppoinmentsStore } from "../../redux/slices/appointments.slice";
+import { BsSearch } from "react-icons/bs"; // Importa BsSearch de 'react-icons/bs'
 
 //componentes
 import CardAppointments from "../../components/CardAppointments";
@@ -19,6 +20,8 @@ const Appointment = () => {
 
   //hook para control de las citas
   const [appointments, setAppointments] = useState([]);
+  const [filter, setFilter] = useState("");
+
   //obtencion de datos desde el store
   const authToken = useSelector((state) => state.user.credentials.token);
   const userRoleId = useSelector((state) => state.user.data.roleId);
@@ -36,7 +39,7 @@ const Appointment = () => {
         const userAppointments = await getUserAppointments(authToken);
         // Establecer las citas en el estado local
         setAppointments(userAppointments.data);
-        console.log(userAppointments.data)
+        console.log(userAppointments.data);
       } catch (error) {
         console.log("Error al obtener las citas del usuario:", error);
       }
@@ -44,12 +47,28 @@ const Appointment = () => {
     fetchAppointments();
   }, [authToken]);
 
-    //se ejecuta cada vez que cambie el valor de appointments o dispatch (actualicen las citas)
+  //se ejecuta cada vez que cambie el valor de appointments o dispatch (actualicen las citas)
   useEffect(() => {
     if (appointments?.length) {
       dispatch(setAppoinmentsStore(appointments));
     }
   }, [appointments, dispatch]);
+
+  const filteredAppointmentsList = appointments.filter((appointment) => {
+    const { dentist } = appointment;
+    const searchTerm = filter.toLowerCase();
+
+    const dentistFullName = `${dentist.name} ${dentist.lastName}`.toLowerCase();
+
+    return (
+      dentistFullName.includes(searchTerm)
+    );
+  });
+
+  const handleChange = (e) => {
+    setFilter(e.target.value);
+
+  };
 
   return (
     <>
@@ -59,7 +78,19 @@ const Appointment = () => {
             MIS CITAS
           </h1>
           <div className=" -mr-6 md:mr-4 mb-2 scale-75 md:scale-100 md:mb-0 flex justify-end items-end">
-            <InputSearch/>
+            {/* <InputSearch  />*/}
+            <form className="max-w-sm">
+              <div className="relative">
+                <BsSearch className="absolute top-2 left-2" />
+                <input
+                  type="text"
+                  placeholder="Buscar..."
+                  className="w-full py-2 pl-10 pr-3 text-gray-500 rounded-lg outline-none bg-gray-50 focus:ring-2 focus:ring-primary border-none text-sm"
+                  value={filter}
+                  onChange={handleChange}
+                />
+              </div>
+            </form>
           </div>
           <div className="scale-80 md:scale-100 flex justify-end">
             <CustomButton onClick={() => navigate("/newAppointment")}>
@@ -109,7 +140,7 @@ const Appointment = () => {
             </div>
           </div>
         </div>
-        {appointments.map((appointment) => (
+        {filteredAppointmentsList.map((appointment) => (
           <>
             <CardAppointments
               key={appointment.id}

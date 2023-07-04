@@ -13,6 +13,7 @@ const config = (token) => {
 //CREAR CITA
 export const createAppointment = async (token, appointment) => {
     const {data} = await axios.post(`${url}appointments/newAppointment`,appointment, config(token))
+    
     return data
 }
 
