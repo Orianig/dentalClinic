@@ -2,7 +2,7 @@
 
 Este proyecto front-end fue realizado utilizando React, Vite y Tailwind CSS. El sistema de clínica dental se conecta a una base de datos previamente creada utilizando Sequelize y Express. El sistema incluye funciones de registro y inicio de sesión, y al ingresar se muestra un dashboard que consta de una barra lateral (sidebar) y un encabezado (header). A continuación se detallan las funcionalidades principales del sistema:
 
-#VISTAS DEL SISTEMA
+# VISTAS DEL SISTEMA
 
 ![INICIO](https://github.com/Orianig/dentalClinic/blob/main/src/assets/images/Readme/inicio.png)
 
