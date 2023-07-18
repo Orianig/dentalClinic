@@ -2,6 +2,16 @@
 
 Este proyecto front-end fue realizado utilizando React, Vite y Tailwind CSS. El sistema de clínica dental se conecta a una base de datos previamente creada utilizando Sequelize y Express. El sistema incluye funciones de registro y inicio de sesión, y al ingresar se muestra un dashboard que consta de una barra lateral (sidebar) y un encabezado (header). A continuación se detallan las funcionalidades principales del sistema:
 
+#VISTAS DEL SISTEMA
+
+![INICIO](https://github.com/Orianig/dentalClinic/blob/main/src/assets/images/Readme/inicio.png)
+
+![INICIO](https://github.com/Orianig/dentalClinic/blob/main/src/assets/images/Readme/usuario.view.png)
+
+![INICIO](https://github.com/Orianig/dentalClinic/blob/main/src/assets/images/Readme/doctor.view.png)
+
+![INICIO](https://github.com/Orianig/dentalClinic/blob/main/src/assets/images/Readme/admin.view.png)
+
 ### Menú
 El menú del sistema contiene varias pestañas que permiten acceder a diferentes secciones y funcionalidades:
 
@@ -34,16 +44,6 @@ El sistema cuenta con tres tipos de usuarios, cada uno con diferentes niveles de
 ### Doctor: Los doctores tienen un nivel de acceso adicional. Además de las funcionalidades de los usuarios regulares, los doctores también pueden ver las citas de sus pacientes asignados y actualizar la información de las citas.
 
 ### Admin: Los administradores tienen el nivel de acceso más alto en el sistema. Tienen acceso completo a todas las funcionalidades del sistema, incluyendo la capacidad de ver todas las citas y todos los usuarios registrados.
-
-#VISTAS DEL SISTEMA
-
-![INICIO](https://github.com/Orianig/dentalClinic/blob/main/src/assets/images/Readme/inicio.png)
-
-![INICIO](https://github.com/Orianig/dentalClinic/blob/main/src/assets/images/Readme/usuario.view.png)
-
-![INICIO](https://github.com/Orianig/dentalClinic/blob/main/src/assets/images/Readme/doctor.view.png)
-
-![INICIO](https://github.com/Orianig/dentalClinic/blob/main/src/assets/images/Readme/admin.view.png)
 
 ## Licencia
 
