@@ -49,8 +49,8 @@ campos del formulario*/
       .then((result) => {
         console.log(user);
         // console.log("Respuesta de inicio de sesión recibida:", result);
-        setToken(result);// guarda mi token ==> setTOKEN
-        console.log(token)
+        setToken(result); // guarda mi token ==> setTOKEN
+        console.log(token);
       })
       .catch((error) => {
         // console.error("Error en el inicio de sesión:", error);
@@ -72,14 +72,13 @@ campos del formulario*/
           name: decoded.name,
           lastName: decoded.lastName,
         })
-
       );
       toast.success("Bienvenido " + decoded.name);
       setTimeout(() => {
-        navigate("/");
+        navigate("/layout");
       }, 1000);
     }
-    console.log(token)
+    console.log(token);
   }, [token, dispatch, navigate]);
 
   return (

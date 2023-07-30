@@ -38,7 +38,7 @@ const Register = () => {
         // console.log("Registro exitoso:", result);
         toast.success(user.name + " te haz registrado con exito");
         setTimeout(() => {
-          navigate("/login");
+          navigate("/");
         }, 2000);
       })
       .catch((error) => {
