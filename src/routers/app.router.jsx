@@ -20,9 +20,9 @@ export const AppRouter = () => {
     la lógica de enrutado este en un solo lugar */
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/layout" element={<LayoutAdmin />}>
+        <Route path="/" element={<LayoutAdmin />}>
           <Route index element={<Profile />} />
           <Route path="appointments" element={<Appointments />} />
           <Route path="newAppointment" element={<NewAppointment />} />
