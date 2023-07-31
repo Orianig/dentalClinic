@@ -50,8 +50,8 @@ const Register = () => {
   return (
     <>
       <div className="register flex flex-col min-h-screen rounded-lg md:p-2">
-        <div className=" mb-0">
-          <img className="h-44 w-auto" src={Logo} alt="Company" />
+        <div className=" -mb-4">
+          <img className="h-20 md:h-44 w-auto m-2" src={Logo} alt="Company" />
         </div>
         <div className="p-2 ml-8">
           <h1 className="text-6xl text-white font-medium mb-2">
